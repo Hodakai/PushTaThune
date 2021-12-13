@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushTaThune", "PushTaThune\PushTaThune.csproj", "{690968D4-8A92-4FB9-B01A-94FF4F2DD37D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{7E26D9C1-B1CC-4897-816E-A7FFB4810B07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushTaThune.DAL", "PushTaThune.DAL\PushTaThune.DAL.csproj", "{23ED4CB5-9698-49C0-9A63-5D7F4FBD28B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{690968D4-8A92-4FB9-B01A-94FF4F2DD37D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690968D4-8A92-4FB9-B01A-94FF4F2DD37D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690968D4-8A92-4FB9-B01A-94FF4F2DD37D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690968D4-8A92-4FB9-B01A-94FF4F2DD37D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E26D9C1-B1CC-4897-816E-A7FFB4810B07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E26D9C1-B1CC-4897-816E-A7FFB4810B07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E26D9C1-B1CC-4897-816E-A7FFB4810B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E26D9C1-B1CC-4897-816E-A7FFB4810B07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23ED4CB5-9698-49C0-9A63-5D7F4FBD28B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23ED4CB5-9698-49C0-9A63-5D7F4FBD28B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23ED4CB5-9698-49C0-9A63-5D7F4FBD28B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23ED4CB5-9698-49C0-9A63-5D7F4FBD28B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4890727A-2F4E-4EA6-A470-2B31412ABA78}
+	EndGlobalSection
+EndGlobal
