@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
+using PushTaThune;
 
 namespace GUI
 {
@@ -7,7 +9,7 @@ namespace GUI
     {
         public void MenuPrincipal ()
         {
-            ConsoleKeyInfo sheesh;
+            ConsoleKeyInfo keyInfo;
             Console.WriteLine("############################################################################");
             Console.WriteLine("                         / Welcome to PushTaThune /");
             Console.WriteLine();
@@ -17,14 +19,13 @@ namespace GUI
             Console.WriteLine("2 - Quitter");
             Console.WriteLine();
             Console.WriteLine("############################################################################");
-            sheesh = Console.ReadKey();
-            if (sheesh.Key == ConsoleKey.D1)
+            keyInfo = Console.ReadKey();
+            if (keyInfo.Key == ConsoleKey.D1)
             {
                 Console.Clear();
-                // TODO Mettre une fonction call dans une autre biblio de classe qui permet de gérer ce qui ce passe après
-                Console.WriteLine("Vous avez choisi l'option 1 !");
+                MenuCalcul();
             }
-            else if (sheesh.Key == ConsoleKey.D2)
+            else if (keyInfo.Key == ConsoleKey.D2)
             {
                 Console.Clear();
                 Console.WriteLine("Merci d'avoir utilisé PushTaThune !");
@@ -43,6 +44,32 @@ namespace GUI
                 Console.Clear();
                 MenuPrincipal();
             }
+        }
+        private void MenuCalcul ()
+        {
+            int nbParticipants;
+            List<string> participants = new List<string>();
+            Console.WriteLine("############################################################################");
+            Console.WriteLine("Combien de participants font partie du calcul : ");
+            nbParticipants = int.Parse(Console.ReadKey().KeyChar.ToString());
+            Console.WriteLine();
+            Console.WriteLine("Très bien, maintenant comment s'appellent ils ?");
+            for (int i = 0; i < nbParticipants; i++)
+            {
+                Console.WriteLine();
+                participants.Add(Console.ReadLine().ToString());
+                Console.WriteLine("Utilisateur : " + participants[i] + " rentré avec succès !");
+            }
+            Console.WriteLine("Tous les utilisateurs ont été rentrés !");
+            Console.WriteLine("############################################################################");
+            Thread.Sleep(2000);
+            Console.Clear();
+            Console.WriteLine("############################################################################");
+            Console.WriteLine();
+            // TODO Faire le menu pour demander qui à donné combien d'argent
+            Console.WriteLine("EZ");
+            Console.WriteLine();
+            Console.WriteLine("############################################################################");
         }
     }
 }
