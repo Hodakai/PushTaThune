@@ -7,9 +7,14 @@ namespace GUI
 {
     public class Menus
     {
+        private int RecupInput()
+        {
+            return int.Parse(Console.ReadKey().KeyChar.ToString());
+        }
+
         public void MenuPrincipal ()
         {
-            ConsoleKeyInfo keyInfo;
+            int keyInfo;
             Console.WriteLine("############################################################################");
             Console.WriteLine("                         / Welcome to PushTaThune /");
             Console.WriteLine();
@@ -19,13 +24,13 @@ namespace GUI
             Console.WriteLine("2 - Quitter");
             Console.WriteLine();
             Console.WriteLine("############################################################################");
-            keyInfo = Console.ReadKey();
-            if (keyInfo.Key == ConsoleKey.D1)
+            keyInfo = RecupInput();
+            if (keyInfo == 1)
             {
                 Console.Clear();
                 MenuCalcul();
             }
-            else if (keyInfo.Key == ConsoleKey.D2)
+            else if (keyInfo == 2)
             {
                 Console.Clear();
                 Console.WriteLine("Merci d'avoir utilisé PushTaThune !");
@@ -45,6 +50,7 @@ namespace GUI
                 MenuPrincipal();
             }
         }
+
         private void MenuCalcul ()
         {
             int nbParticipants;
@@ -53,7 +59,7 @@ namespace GUI
             Console.WriteLine("                         Etape 1 - Les participants");
             Console.WriteLine();
             Console.WriteLine("Combien de participants font partie du calcul : ");
-            nbParticipants = int.Parse(Console.ReadKey().KeyChar.ToString());
+            nbParticipants = RecupInput();
             Console.WriteLine();
             Console.WriteLine("Très bien, maintenant comment s'appellent ils ?");
             for (int i = 0; i < nbParticipants; i++)
