@@ -2,7 +2,7 @@
 
 namespace PushTaThune.DAL
 {
-    public class Class1
+    public class Participant_DAL
     {
     }
 }

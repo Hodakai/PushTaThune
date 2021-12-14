@@ -50,6 +50,8 @@ namespace GUI
             int nbParticipants;
             List<string> participants = new List<string>();
             Console.WriteLine("############################################################################");
+            Console.WriteLine("                         Etape 1 - Les participants");
+            Console.WriteLine();
             Console.WriteLine("Combien de participants font partie du calcul : ");
             nbParticipants = int.Parse(Console.ReadKey().KeyChar.ToString());
             Console.WriteLine();
@@ -65,9 +67,13 @@ namespace GUI
             Thread.Sleep(2000);
             Console.Clear();
             Console.WriteLine("############################################################################");
-            Console.WriteLine();
+            Console.WriteLine("                      Etape 2 - Qui à donné combien ?");
             // TODO Faire le menu pour demander qui à donné combien d'argent
-            Console.WriteLine("EZ");
+            Console.WriteLine();
+            for (int i = 0; i < participants.Count; i++)
+            {
+                Console.WriteLine("Entrez");
+            }
             Console.WriteLine();
             Console.WriteLine("############################################################################");
         }
