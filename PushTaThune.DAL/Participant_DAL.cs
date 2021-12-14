@@ -32,9 +32,9 @@ namespace PushTaThune.DAL
 
         #region Constructeurs
 
-        public Participant_DAL(string name, int idSoiree) => (this.name, this.idSoiree) = (name, idSoiree);
+        public Participant_DAL(string name, int idSoiree) => (this.nom, this.idSoiree) = (name, idSoiree);
 
-        public Participant_DAL(int id, string name, int idSoiree) => (this.idParticipant, this.name, this.idSoiree) = (id, name, idSoiree);
+        public Participant_DAL(int id, string name, int idSoiree) => (this.idParticipant, this.nom, this.idSoiree) = (id, name, idSoiree);
 
         #endregion
 

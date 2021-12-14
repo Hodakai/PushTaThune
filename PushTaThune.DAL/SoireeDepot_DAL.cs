@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace PushTaThune.DAL
 {
-    class SoireeDepot_DAL : Depot_DAL<Soiree_DAL>
+    public class SoireeDepot_DAL : Depot_DAL<Soiree_DAL>
     {
         public SoireeDepot_DAL()
             : base()

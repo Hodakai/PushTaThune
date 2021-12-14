@@ -8,9 +8,25 @@ namespace GUI
 {
     public class Menus
     {
-        private int RecupInput()
+        private int RecupInputInt()
         {
             return int.Parse(Console.ReadKey().KeyChar.ToString());
+        }
+
+        private string RecupInputString()
+        {
+            return Console.ReadKey().KeyChar.ToString();
+        }
+
+        private DateTime EntreeDateConsole()
+        {
+            DateTime userDateTime;
+            while (!DateTime.TryParse(Console.ReadLine(), out userDateTime)) {
+                Console.WriteLine("Vous avez rentré une date invalide, reessayez...");
+                EntreeDateConsole();
+            }
+            Console.WriteLine("Vous avez rentré la date : " + userDateTime);
+            return userDateTime;
         }
 
         public void MenuPrincipal ()
@@ -25,12 +41,13 @@ namespace GUI
             Console.WriteLine("2 - Quitter");
             Console.WriteLine();
             Console.WriteLine("############################################################################");
-            keyInfo = RecupInput();
+            keyInfo = RecupInputInt();
             if (keyInfo == 1)
             {
-                var soiree = new Soiree_DAL
                 Console.Clear();
-                MenuCalcul();
+                Thread.Sleep(1000);
+                int IDsoiree = MenuIntermediaire();
+                MenuCalcul(IDsoiree);
             }
             else if (keyInfo == 2)
             {
@@ -53,6 +70,24 @@ namespace GUI
             }
         }
 
+        private int MenuIntermediaire()
+        {
+            Console.WriteLine("############################################################################");
+            Console.WriteLine("Création d'une soirée");
+            Console.WriteLine();
+            Console.WriteLine("Ou se déroule votre soirée ?");
+            string lieu = RecupInputString();
+            Console.WriteLine();
+            Console.WriteLine("Très bien, mainntenant quand se passe cette soirée ? (format : jj/mm/aaaa)");
+            DateTime dt = EntreeDateConsole();
+            Console.WriteLine();
+            Console.WriteLine("############################################################################");
+            var soiree = new Soiree_DAL(lieu, dt);
+            var dps = new SoireeDepot_DAL();
+            soiree = dps.insert(soiree);
+            return soiree.getIDSoiree;
+        }
+
         private void MenuCalcul (int IDsoiree)
         {
             #region ETAPE 1
@@ -63,7 +98,7 @@ namespace GUI
             Console.WriteLine("                         Etape 1 - Les participants");
             Console.WriteLine();
             Console.WriteLine("Combien de participants font partie du calcul : ");
-            nbParticipants = RecupInput();
+            nbParticipants = RecupInputInt();
             Console.WriteLine();
             Console.WriteLine("Très bien, maintenant comment s'appellent ils ?");
             for (int i = 0; i < nbParticipants; i++)
