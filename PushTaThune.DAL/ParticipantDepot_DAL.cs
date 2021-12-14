@@ -87,6 +87,7 @@ namespace PushTaThune.DAL
 
             commande.Parameters.Add(new SqlParameter("@nom", participant.getNom));
             commande.Parameters.Add(new SqlParameter("@idSoiree", participant.getIDSoiree));
+            commande.Parameters.Add(new SqlParameter("@ID", participant.getIDParticipant));
 
             var linesAffected = (int)commande.ExecuteNonQuery();
 
