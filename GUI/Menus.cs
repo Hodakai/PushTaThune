@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using PushTaThune;
+using PushTaThune.DAL;
 
 namespace GUI
 {
@@ -27,6 +28,7 @@ namespace GUI
             keyInfo = RecupInput();
             if (keyInfo == 1)
             {
+                var soiree = new Soiree_DAL
                 Console.Clear();
                 MenuCalcul();
             }
@@ -51,10 +53,12 @@ namespace GUI
             }
         }
 
-        private void MenuCalcul ()
+        private void MenuCalcul (int IDsoiree)
         {
+            #region ETAPE 1
+
             int nbParticipants;
-            List<string> participants = new List<string>();
+            List<Participant_DAL> participants = new List<Participant_DAL>();
             Console.WriteLine("############################################################################");
             Console.WriteLine("                         Etape 1 - Les participants");
             Console.WriteLine();
@@ -65,13 +69,20 @@ namespace GUI
             for (int i = 0; i < nbParticipants; i++)
             {
                 Console.WriteLine();
-                participants.Add(Console.ReadLine().ToString());
-                Console.WriteLine("Utilisateur : " + participants[i] + " rentré avec succès !");
+                var p = new Participant_DAL(Console.ReadLine().ToString(), IDsoiree);
+                participants.Add(p);
+                Console.WriteLine("Utilisateur : " + participants[i].getNom + " rentré avec succès !");
             }
             Console.WriteLine("Tous les utilisateurs ont été rentrés !");
             Console.WriteLine("############################################################################");
             Thread.Sleep(2000);
+
+            #endregion
+
             Console.Clear();
+
+            #region ETAPE 2
+
             Console.WriteLine("############################################################################");
             Console.WriteLine("                      Etape 2 - Qui à donné combien ?");
             // TODO Faire le menu pour demander qui à donné combien d'argent
@@ -82,6 +93,8 @@ namespace GUI
             }
             Console.WriteLine();
             Console.WriteLine("############################################################################");
+
+            #endregion
         }
     }
 }

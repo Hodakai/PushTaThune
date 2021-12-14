@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace PushTaThune.DAL
 {
-    class Soiree_DAL
+    public class Soiree_DAL
     {
         public int ID;
         public string lieu;

@@ -2,7 +2,7 @@
 
 namespace PushTaThune.DAL
 {
-    class Montant_DAL
+    public class Montant_DAL
     {
         public double montant;
         public int idParticipant;
