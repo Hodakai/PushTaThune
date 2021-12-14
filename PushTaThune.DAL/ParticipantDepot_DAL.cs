@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PushTaThune.DAL
 {
@@ -42,8 +39,6 @@ namespace PushTaThune.DAL
             commande.CommandText = "SELECT id, nom, idSoiree FROM participant WHERE id=@id";
             commande.Parameters.Add(new SqlParameter("@id", ID));
             var reader = commande.ExecuteReader();
-
-            var listFournisseur = new List<Participant_DAL>();
 
             Participant_DAL p;
             if (reader.Read())
