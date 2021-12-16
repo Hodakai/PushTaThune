@@ -5,6 +5,7 @@ namespace PushTaThune
     class Soiree
     {
         public int ID;
+        public string nom;
         public string lieu;
         public DateTime date;
 
@@ -14,6 +15,12 @@ namespace PushTaThune
         {
             get { return ID; }
             private set { ID = value; }
+        }
+
+        public string getNom
+        {
+            get { return nom; }
+            private set { nom = value; }
         }
 
         public string getLieu
@@ -31,13 +38,14 @@ namespace PushTaThune
         #endregion
 
         #region Constructeur
-        public Soiree(string lieu, DateTime date)
+        public Soiree(string nom, string lieu, DateTime date)
         {
+            this.nom = nom;
             this.lieu = lieu;
             this.date = date;
         }
-        public Soiree(int id, string lieu, DateTime date)
-            : this(lieu, date)
+        public Soiree(int id, string nom, string lieu, DateTime date)
+            : this(nom, lieu, date)
         {
             this.ID = id;
         }

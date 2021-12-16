@@ -14,7 +14,7 @@ namespace PushTaThune.DAL
         {
             createConnection();
 
-            commande.CommandText = "SELECT id, lieu, date FROM soiree";
+            commande.CommandText = "SELECT id, nom, lieu, date FROM soiree";
             var reader = commande.ExecuteReader();
 
             var listeSoirees = new List<Soiree_DAL>();
@@ -22,8 +22,9 @@ namespace PushTaThune.DAL
             while (reader.Read())
             {
                 var s = new Soiree_DAL(reader.GetInt32(0),
-                                                reader.GetString(1),
-                                                reader.GetDateTime(2));
+                                       reader.GetString(1),
+                                       reader.GetString(2),
+                                       reader.GetDateTime(3));
                 listeSoirees.Add(s);
             }
 
@@ -36,7 +37,7 @@ namespace PushTaThune.DAL
         {
             createConnection();
 
-            commande.CommandText = "SELECT id, lieu, date FROM soiree WHERE id=@id";
+            commande.CommandText = "SELECT id, nom, lieu, date FROM soiree WHERE id=@id";
             commande.Parameters.Add(new SqlParameter("@id", ID));
             var reader = commande.ExecuteReader();
 
@@ -44,8 +45,9 @@ namespace PushTaThune.DAL
             if (reader.Read())
             {
                 s = new Soiree_DAL(reader.GetInt32(0),
-                                                reader.GetString(1),
-                                                reader.GetDateTime(2));
+                                       reader.GetString(1),
+                                       reader.GetString(2),
+                                       reader.GetDateTime(3));
             }
             else
                 throw new Exception($"Pas de soirées avec l'ID {ID}");
@@ -59,8 +61,9 @@ namespace PushTaThune.DAL
         {
             createConnection();
 
-            commande.CommandText = "INSERT INTO soiree(lieu, date) VALUES (@lieu, @date); select scope_identity()";
+            commande.CommandText = "INSERT INTO soiree(nom, lieu, date) VALUES (@nom, @lieu, @date); select scope_identity()";
 
+            commande.Parameters.Add(new SqlParameter("@nom", soiree.getNom));
             commande.Parameters.Add(new SqlParameter("@lieu", soiree.getLieu));
             commande.Parameters.Add(new SqlParameter("@date", soiree.getDate));
 
