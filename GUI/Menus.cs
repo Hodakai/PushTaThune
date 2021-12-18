@@ -19,24 +19,6 @@ namespace GUI
             return Console.ReadLine().ToString();
         }
 
-        /*private void Chargement()
-        {
-            bool sheesh = false;
-            while (!sheesh)
-            {
-                Console.Clear();
-                Console.WriteLine("############################################################################");
-                Console.WriteLine();
-                Console.WriteLine("                                Chargement");
-                Console.WriteLine();
-                Console.WriteLine("");
-                Console.WriteLine();
-                Console.WriteLine("############################################################################");
-                Thread.Sleep(500);
-                Console.Clear();
-            }
-        }*/
-
         private DateTime EntreeDateConsole()
         {
             DateTime userDateTime;
