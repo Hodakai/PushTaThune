@@ -10,10 +10,5 @@ namespace PushTaThune
             Menus menu = new Menus();
             menu.MenuPrincipal();
         }
-
-        void Calcul()
-        {
-
-        }
     }
 }

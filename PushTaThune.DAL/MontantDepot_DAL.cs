@@ -59,11 +59,13 @@ namespace PushTaThune.DAL
         {
             createConnection();
 
-            commande.CommandText = "INSERT INTO montant(montant, idParticipant, idSoiree) VALUES (@montant, @idParticipant, @idSoiree)";
+            commande.CommandText = "INSERT INTO montant(montant, idParticipant, idSoiree) VALUES (@montant, @idParticipant, @idSoiree);";
 
             commande.Parameters.Add(new SqlParameter("@montant", montant.montant));
             commande.Parameters.Add(new SqlParameter("@idParticipant", montant.idParticipant));
             commande.Parameters.Add(new SqlParameter("@idSoiree", montant.idSoiree));
+
+            commande.ExecuteNonQuery();
 
             closeConnection();
 
