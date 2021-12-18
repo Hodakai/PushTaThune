@@ -9,17 +9,17 @@ namespace GUI
 {
     public class Menus
     {
-        private int RecupInputInt()
+        public int RecupInputInt()
         {
             return int.Parse(Console.ReadKey().KeyChar.ToString());
         }
 
-        private string RecupInputString()
+        public string RecupInputString()
         {
             return Console.ReadLine().ToString();
         }
 
-        private DateTime EntreeDateConsole()
+        public DateTime EntreeDateConsole()
         {
             DateTime userDateTime;
             while (!DateTime.TryParse(Console.ReadLine(), out userDateTime))
@@ -31,7 +31,7 @@ namespace GUI
             return userDateTime;
         }
 
-        private DateTime DateTimeParse()
+        public DateTime DateTimeParse()
         {
             List<int> dateNombres = new List<int>();
             Console.WriteLine("Très bien, mainntenant quand se passe cette soirée ? (format : jj/mm/aaaa)");
@@ -115,7 +115,7 @@ namespace GUI
             }
         }
 
-        private void MenuAjoutParticipant()
+        public void MenuAjoutParticipant()
         {
             Console.WriteLine("############################################################################");
             Console.WriteLine("                      Enregistrement des participants");
@@ -180,7 +180,7 @@ namespace GUI
             }
         }
 
-        private void MenuSuppressionParticipant()
+        public void MenuSuppressionParticipant()
         {
             Console.WriteLine("############################################################################");
             Console.WriteLine($"                       Suppression d'un participant");
@@ -225,7 +225,7 @@ namespace GUI
             MenuAjoutParticipant();
         }
 
-        private void MenuCréationParticipant()
+        public void MenuCréationParticipant()
         {
             ParticipantDepot_DAL participantDepot = new ParticipantDepot_DAL();
             Console.WriteLine("############################################################################");
@@ -244,7 +244,7 @@ namespace GUI
             MenuAjoutParticipant();
         }
 
-        private void AffichageDesSoirées()
+        public void AffichageDesSoirées()
         {
             Console.WriteLine("############################################################################");
             Console.WriteLine("                                Vos soirées");
@@ -316,7 +316,7 @@ namespace GUI
             }
         }
 
-        private void MenuSuppressionSoirée()
+        public void MenuSuppressionSoirée()
         {
             Console.WriteLine("############################################################################");
             Console.WriteLine("Voici vos soirées : ");
@@ -358,7 +358,7 @@ namespace GUI
             Console.Clear();
         }
 
-        private void MenuCréationSoirée()
+        public void MenuCréationSoirée()
         {
             Console.WriteLine("############################################################################");
             Console.WriteLine("                          Création d'une soirée");
@@ -384,7 +384,7 @@ namespace GUI
             Thread.Sleep(2000);
         }
 
-        private void MenuAjoutParticipantsSoirée(int IDsoiree)
+        public void MenuAjoutParticipantsSoirée(int IDsoiree)
         {
 
             SoireeDepot_DAL soireeDepot = new SoireeDepot_DAL();
@@ -448,7 +448,7 @@ namespace GUI
             }
 
         }
-        private void MenuAjoutPartcipantsDansSoiréeAvecBDD(Soiree_DAL soirée)
+        public void MenuAjoutPartcipantsDansSoiréeAvecBDD(Soiree_DAL soirée)
         {
             var depotParticipants = new ParticipantDepot_DAL();
             var participants = new List<Participant_DAL>();
@@ -493,7 +493,7 @@ namespace GUI
             MenuAjoutParticipantsSoirée(soirée.getIDSoiree);
         }
 
-        private void MenuSupressionDeParticipantDeSoirée(Soiree_DAL soirée)
+        public void MenuSupressionDeParticipantDeSoirée(Soiree_DAL soirée)
         {
             var depotParticipants = new ParticipantDepot_DAL();
             var participants = new List<Participant_DAL>();
@@ -537,7 +537,7 @@ namespace GUI
             MenuAjoutParticipantsSoirée(soirée.getIDSoiree);
         }
 
-        private void MenuCalcul()
+        public void MenuCalcul()
         {
 
             Console.WriteLine("############################################################################");
@@ -578,7 +578,7 @@ namespace GUI
             }
         }
 
-        private void AffichageCalcul(Soiree_DAL soiree)
+        public void AffichageCalcul(Soiree_DAL soiree)
         {
             MontantDepot_DAL montantDepot = new MontantDepot_DAL();
             List<Montant_DAL> montantsAll = montantDepot.getAll();
@@ -642,7 +642,7 @@ namespace GUI
             MenuPrincipal();
         }
 
-        private void ChargementCalcul()
+        public void ChargementCalcul()
         {
             Console.Clear();
             Console.WriteLine("############################################################################");
@@ -660,7 +660,7 @@ namespace GUI
             Console.Clear();
         }
 
-        private void Calcul(Soiree_DAL soiree)
+        public void Calcul(Soiree_DAL soiree)
         {
             MontantDepot_DAL montantDepot = new MontantDepot_DAL();
             ParticipantDepot_DAL participantDepot = new ParticipantDepot_DAL();
@@ -744,7 +744,7 @@ namespace GUI
                     {
                         Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} reçoit {argentDonne} E de {participantDepot.getByID(participantD.getIDParticipant).getNom}");
                         argentARecevoir -= argentDonne;
-                        Console.WriteLine($"Manque plus que {argentARecevoir} E a {participantDepot.getByID(participantR.getIDParticipant).getNom} pour être totalement remboursé !");
+                        Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} est totalement remboursé !");
                         Console.WriteLine();
                         argentDonne = 0;
                         participantsDejaDonne.Add(participantD);

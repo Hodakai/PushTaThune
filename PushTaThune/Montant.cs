@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PushTaThune
 {
-    class Montant
+    public class Montant
     {
         public double montant;
         public int idParticipant;

@@ -2,7 +2,7 @@
 
 namespace PushTaThune
 {
-    class Soiree
+    public class Soiree
     {
         public int ID;
         public string nom;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PushTaThune
 {
-    class Participant
+    public class Participant
     {
         int idParticipant;
         string nom;
