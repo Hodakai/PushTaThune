@@ -53,5 +53,24 @@ namespace PushTaThune.DAL.Tests
             Assert.NotNull(result);
             Assert.IsType<Soiree_DAL>(result);
         }
+
+        [Fact]
+        public void SoireeDepot_DAL_ValiderUpdate()
+        {
+            // Arrange
+            SoireeDepot_DAL dp = new SoireeDepot_DAL();
+            Soiree_DAL s = dp.getByID(3);
+            s = new Soiree_DAL("testtest", "test2City", DateTime.Now);
+
+            // Act
+            var result = dp.update(s);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<Soiree_DAL>(result);
+            Assert.Equal("testtest", result.getNom);
+            Assert.Equal("test2City", result.getLieu);
+            Assert.Equal(DateTime.Now.ToString("d"), result.getNom);
+        }
     }
 }

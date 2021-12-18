@@ -53,5 +53,23 @@ namespace PushTaThune.DAL.Tests
             Assert.NotNull(result);
             Assert.IsType<Participant_DAL>(result);
         }
+
+        [Fact]
+        public void ParticipantDepot_DAL_ValiderUpdate()
+        {
+            // Arrange
+            ParticipantDepot_DAL dp = new ParticipantDepot_DAL();
+            Participant_DAL s = dp.getByID(3);
+            s = new Participant_DAL("test4", 3);
+
+            // Act
+            var result = dp.update(s);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<Participant_DAL>(result);
+            Assert.Equal("test4", result.getNom);
+            Assert.Equal(3, result.getIDSoiree);
+        }
     }
 }
