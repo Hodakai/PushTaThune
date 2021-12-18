@@ -142,7 +142,7 @@ namespace GUI
             SoireeDepot_DAL soireeDepot = new SoireeDepot_DAL();
             List<Soiree_DAL> soirées = soireeDepot.getAll();
             List<Participant_DAL> participants = participantDepot.getAll();
-            Soiree_DAL soiree = soirées[1]; // Ici j'assigne la première valeur par défault sinon le compileur est pas content (╯°□°）╯︵ ┻━┻
+            Soiree_DAL soiree = soirées[0]; // Ici j'assigne la première valeur par défault sinon le compileur est pas content (╯°□°）╯︵ ┻━┻
             foreach (var participant in participants)
             {
                 if (participant.getIDSoiree != 0)
@@ -154,10 +154,10 @@ namespace GUI
                             soiree = item;
                         }
                     }
-                    Console.WriteLine($"{participant.getNom} -> Participe à la soirée {soiree.getNom} ヾ(⌐■_■)ノ♪");
+                    Console.WriteLine($"{participant.getNom} -> Participe à la soirée {soiree.getNom}");
                 }
                 else
-                    Console.WriteLine($"{participant.getNom} -> Ne participe à aucune soirée ಥ_ಥ");
+                    Console.WriteLine($"{participant.getNom} -> Ne participe à aucune soirée");
             }
             Console.WriteLine();
             Console.WriteLine("Que voulez-vous faire ?");
@@ -360,7 +360,10 @@ namespace GUI
             }
             Console.WriteLine();
             if (choixCorrect)
+            {
                 Console.WriteLine("La soirée à été supprimée avec succès !");
+                Console.WriteLine("Retour à la page d'affichage des soirées...");
+            }
             else
             {
                 Console.WriteLine("Veuillez reesayer avec un nom de soirée parmi la liste présentée...");
@@ -369,6 +372,8 @@ namespace GUI
             }
             Console.WriteLine();
             Console.WriteLine("############################################################################");
+            Thread.Sleep(2000);
+            Console.Clear();
         }
 
         private void MenuCréationSoirée()
@@ -498,6 +503,7 @@ namespace GUI
             {
                 Console.WriteLine("Veuillez rentrer une participant faisant partie de la liste, reessayez");
                 Thread.Sleep(2000);
+                Console.Clear();
                 MenuAjoutPartcipantsDansSoiréeAvecBDD(soirée);
             }
             Console.WriteLine($"Retour à la liste des participants de la soirée {soirée.getNom}...");
@@ -556,6 +562,7 @@ namespace GUI
             Console.WriteLine("                     Calcul du remboursement de chacun");
             Console.WriteLine();
             Console.WriteLine("Voici la liste des soirées crées : ");
+            Console.WriteLine();
             SoireeDepot_DAL soireeDepot = new SoireeDepot_DAL();
             List<Soiree_DAL> soirees = soireeDepot.getAll();
             foreach (var soiree in soirees)
@@ -613,7 +620,7 @@ namespace GUI
             }
             Console.Clear();
             Console.WriteLine("############################################################################");
-            Console.WriteLine($"Entrez le montant donné par les participants de la soirée {soiree.getNom}");
+            Console.WriteLine($"            Montant donné par les participants de {soiree.getNom}");
             Console.WriteLine();
             bool skip;
             foreach (var participant in participants)
@@ -633,9 +640,9 @@ namespace GUI
                     double montantDonne = double.Parse(Console.ReadLine());
                     Montant_DAL montant = new Montant_DAL(montantDonne, participant.getIDParticipant, soiree.getIDSoiree);
                     montantDepot.insert(montant);
+                    Console.WriteLine();
                 }
             }
-            Console.WriteLine();
             Console.WriteLine("Tous les montants ont été rentrés !");
             Console.WriteLine();
             Console.WriteLine("############################################################################");
@@ -645,8 +652,12 @@ namespace GUI
             Console.WriteLine($"          Voila les résultats pour la soirée : {soiree.getNom} !");
             Console.WriteLine();
             Calcul(soiree);
+            Console.WriteLine("Pressez la touche entrer pour retourner au menu d'accueil...");
             Console.WriteLine();
             Console.WriteLine("############################################################################");
+            Console.ReadKey();
+            Console.Clear();
+            MenuPrincipal();
         }
 
         private void ChargementCalcul()
@@ -657,7 +668,7 @@ namespace GUI
             Console.WriteLine("                             Calcul en cours");
             Console.WriteLine();
             Console.Write("[");
-            for (int i = 0; i < 75; i++)
+            for (int i = 0; i < 74; i++)
             {
                 Console.Write("/");
                 Thread.Sleep(10);
@@ -730,18 +741,21 @@ namespace GUI
                     {
                         Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} reçoit {argentDonne} E de {participantDepot.getByID(participantD.getIDParticipant).getNom}");
                         argentARecevoir -= argentDonne;
-                        Console.WriteLine($"Manque plus que {argentARecevoir} E a {participantDepot.getByID(participantR.getIDParticipant).getNom} pour être totalement remboursé !");
+                        if (argentARecevoir == 0)
+                            Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} est totalement remboursé !");
+                        else
+                            Console.WriteLine($"Manque plus que {argentARecevoir} E a {participantDepot.getByID(participantR.getIDParticipant).getNom} pour être totalement remboursé !");
                         argentDonne = 0;
                         Console.WriteLine();
                         participantsDejaDonne.Add(participantD);
                     }
                     else if (participantR.getMontant - argentDonne < moyenneMontants && !skip && argentDonne != 0)
                     {
-                        Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} reçoit {participantR.getMontant - moyenneMontants} E de {participantDepot.getByID(participantD.getIDParticipant).getNom}");
-                        argentARecevoir = 0;
-                        Console.WriteLine($"Manque plus que {argentARecevoir} E a {participantDepot.getByID(participantR.getIDParticipant).getNom} pour être totalement remboursé !");
+                        Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} reçoit {argentARecevoir} E de {participantDepot.getByID(participantD.getIDParticipant).getNom}");
+                        Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} est totalement remboursé !");
                         Console.WriteLine();
-                        argentDonne -= participantR.getMontant - moyenneMontants;
+                        argentDonne -= argentARecevoir;
+                        argentARecevoir = 0;
                         break;
                     }
                     else if (!skip && argentDonne != 0)
@@ -756,7 +770,14 @@ namespace GUI
                     }
                     if (argentARecevoir == 0)
                         break;
-                    i++;
+                    if (i > montantsParticipantsDonnent.Count)
+                    {
+                        i = 0;
+                    }
+                    else
+                    {
+                        i++;
+                    }
                 }
             }
         }

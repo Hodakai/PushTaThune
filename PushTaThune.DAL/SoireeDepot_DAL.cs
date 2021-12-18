@@ -14,7 +14,7 @@ namespace PushTaThune.DAL
         {
             createConnection();
 
-            commande.CommandText = "SELECT id, nom, lieu, date FROM soiree";
+            commande.CommandText = "SELECT id, nom, lieu, date FROM soirees";
             var reader = commande.ExecuteReader();
 
             var listeSoirees = new List<Soiree_DAL>();
@@ -37,7 +37,7 @@ namespace PushTaThune.DAL
         {
             createConnection();
 
-            commande.CommandText = "SELECT id, nom, lieu, date FROM soiree WHERE id=@id";
+            commande.CommandText = "SELECT id, nom, lieu, date FROM soirees WHERE id=@id";
             commande.Parameters.Add(new SqlParameter("@id", ID));
             var reader = commande.ExecuteReader();
 
@@ -61,7 +61,7 @@ namespace PushTaThune.DAL
         {
             createConnection();
 
-            commande.CommandText = "INSERT INTO soiree(nom, lieu, date) VALUES (@nom, @lieu, @date); select scope_identity()";
+            commande.CommandText = "INSERT INTO soirees(nom, lieu, date) VALUES (@nom, @lieu, @date); select scope_identity()";
 
             commande.Parameters.Add(new SqlParameter("@nom", soiree.getNom));
             commande.Parameters.Add(new SqlParameter("@lieu", soiree.getLieu));
@@ -80,7 +80,7 @@ namespace PushTaThune.DAL
         {
             createConnection();
 
-            commande.CommandText = "UPDATE soiree set lieu=@lieu, date=@date WHERE id=@ID";
+            commande.CommandText = "UPDATE soirees set lieu=@lieu, date=@date WHERE id=@ID";
 
             commande.Parameters.Add(new SqlParameter("@lieu", soiree.getLieu));
             commande.Parameters.Add(new SqlParameter("@date", soiree.getDate));
@@ -103,7 +103,7 @@ namespace PushTaThune.DAL
         {
             createConnection();
 
-            commande.CommandText = "DELETE * FROM soiree WHERE id=@ID";
+            commande.CommandText = "DELETE FROM soirees WHERE id=@ID";
             commande.Parameters.Add(new SqlParameter("@ID", soiree.getIDSoiree));
 
             var linesAffected = (int)commande.ExecuteNonQuery();
@@ -121,7 +121,7 @@ namespace PushTaThune.DAL
         {
             createConnection();
 
-            commande.CommandText = "DELETE FROM soiree WHERE id=@ID";
+            commande.CommandText = "DELETE FROM soirees WHERE id=@ID";
             commande.Parameters.Add(new SqlParameter("@ID", ID));
 
             var linesAffected = (int)commande.ExecuteNonQuery();
