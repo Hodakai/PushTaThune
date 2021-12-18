@@ -40,7 +40,8 @@ namespace GUI
         private DateTime EntreeDateConsole()
         {
             DateTime userDateTime;
-            while (!DateTime.TryParse(Console.ReadLine(), out userDateTime)) {
+            while (!DateTime.TryParse(Console.ReadLine(), out userDateTime))
+            {
                 Console.WriteLine("Vous avez rentré une date invalide, reessayez...");
                 EntreeDateConsole();
             }
@@ -81,7 +82,7 @@ namespace GUI
             return dateSoiree;
         }
 
-        public void MenuPrincipal ()
+        public void MenuPrincipal()
         {
             int keyInfo;
             Console.WriteLine("############################################################################");
@@ -108,6 +109,7 @@ namespace GUI
             }
             else if (keyInfo == 3)
             {
+                Console.Clear();
                 MenuCalcul();
             }
             else if (keyInfo == 4)
@@ -549,7 +551,7 @@ namespace GUI
 
         private void MenuCalcul()
         {
-            
+
             Console.WriteLine("############################################################################");
             Console.WriteLine("                     Calcul du remboursement de chacun");
             Console.WriteLine();
@@ -590,6 +592,8 @@ namespace GUI
         private void AffichageCalcul(Soiree_DAL soiree)
         {
             MontantDepot_DAL montantDepot = new MontantDepot_DAL();
+            List<Montant_DAL> montantsAll = montantDepot.getAll();
+            List<Montant_DAL> montants = new List<Montant_DAL>();
             ParticipantDepot_DAL participantDepot = new ParticipantDepot_DAL();
             List<Participant_DAL> participantsAll = participantDepot.getAll();
             List<Participant_DAL> participants = new List<Participant_DAL>();
@@ -600,22 +604,46 @@ namespace GUI
                     participants.Add(item);
                 }
             }
+            foreach (var item in montantsAll)
+            {
+                if (item.idSoiree == soiree.getIDSoiree)
+                {
+                    montants.Add(item);
+                }
+            }
+            Console.Clear();
             Console.WriteLine("############################################################################");
             Console.WriteLine($"Entrez le montant donné par les participants de la soirée {soiree.getNom}");
             Console.WriteLine();
+            bool skip;
             foreach (var participant in participants)
             {
-                Console.WriteLine($"Le montant donné par {participant.getNom} : ");
-                double montantDonne = double.Parse(Console.ReadLine());
-                Montant_DAL montant = new Montant_DAL(montantDonne, participant.getIDParticipant, soiree.getIDSoiree);
-                montantDepot.insert(montant); //PROBLEME ICI
+                skip = false;
+                foreach (var montant_DAL in montants)
+                {
+                    if (montant_DAL.getIDParticipant == participant.getIDParticipant)
+                    {
+                        skip = true;
+                        break;
+                    }
+                }
+                if (!skip)
+                {
+                    Console.WriteLine($"Le montant donné par {participant.getNom} : ");
+                    double montantDonne = double.Parse(Console.ReadLine());
+                    Montant_DAL montant = new Montant_DAL(montantDonne, participant.getIDParticipant, soiree.getIDSoiree);
+                    montantDepot.insert(montant);
+                }
             }
             Console.WriteLine();
             Console.WriteLine("Tous les montants ont été rentrés !");
             Console.WriteLine();
+            Console.WriteLine("############################################################################");
+            Thread.Sleep(2000);
             ChargementCalcul();
             Console.WriteLine("############################################################################");
             Console.WriteLine($"          Voila les résultats pour la soirée : {soiree.getNom} !");
+            Console.WriteLine();
             Calcul(soiree);
             Console.WriteLine();
             Console.WriteLine("############################################################################");
@@ -673,46 +701,63 @@ namespace GUI
                 else
                     montantsParticipantsRecoivent.Add(item);
             }
-            bool argentAdonner = false;
             bool skip = false;
             double argentDonne = 0;
+            double argentARecevoir = 0;
             List<Montant_DAL> participantsDejaDonne = new List<Montant_DAL>();
-            foreach (var participantR in montantsParticipantsRecoivent)
+            foreach (var participantR in montantsParticipantsRecoivent) // ATTENTION !!! Ici le participantR est un Montant_DAL qui représente la personne qui se fait rembourser !
             {
-                foreach (var participantD in montantsParticipantsDonnent)
-                 {
-                        foreach (var item in participantsDejaDonne)
+                argentARecevoir = participantR.getMontant - moyenneMontants;
+                int i = 0;
+                while (argentARecevoir != 0)
+                {
+                    Montant_DAL participantD = montantsParticipantsDonnent[i];
+
+                    if (argentDonne == 0)
+                        argentDonne = moyenneMontants - participantD.getMontant;
+
+                    foreach (var item in participantsDejaDonne)
+                    {
+                        if (item.getIDSoiree == participantD.getIDSoiree && item.getIDParticipant == participantD.getIDParticipant)
                         {
-                            if (item.getIDSoiree == participantD.getIDSoiree && item.getIDParticipant == participantD.getIDParticipant)
-                                skip = true;
-                            else
-                                skip = false;
-                        }
-                        if (!argentAdonner && !skip)
-                        {
-                            argentDonne = moyenneMontants - participantD.getMontant;
-                        }
-                        if (participantR.getMontant - argentDonne > moyenneMontants && !skip)
-                        {
-                            Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} reçoit {argentDonne} E de {participantDepot.getByID(participantD.getIDParticipant).getNom}");
-                            argentAdonner = false;
-                            participantsDejaDonne.Add(participantD);
-                        }
-                        else if (participantR.getMontant - argentDonne < moyenneMontants && !skip)
-                        {
-                            Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} reçoit {participantR.getMontant - moyenneMontants} E de {participantDepot.getByID(participantD.getIDParticipant).getNom}");
-                            argentDonne -= participantR.getMontant - moyenneMontants;
-                            argentAdonner = true;
+                            skip = true;
                             break;
                         }
-                        else if (!skip)
-                        {
-                            Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} reçoit {argentDonne} E de {participantDepot.getByID(participantD.getIDParticipant).getNom}");
-                            argentAdonner = false;
-                            participantsDejaDonne.Add(participantD);
-                            break;
-                        }
-                 }
+                        else
+                            skip = false;
+                    }
+                    if (participantR.getMontant - argentDonne > moyenneMontants && !skip && argentDonne != 0)
+                    {
+                        Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} reçoit {argentDonne} E de {participantDepot.getByID(participantD.getIDParticipant).getNom}");
+                        argentARecevoir -= argentDonne;
+                        Console.WriteLine($"Manque plus que {argentARecevoir} E a {participantDepot.getByID(participantR.getIDParticipant).getNom} pour être totalement remboursé !");
+                        argentDonne = 0;
+                        Console.WriteLine();
+                        participantsDejaDonne.Add(participantD);
+                    }
+                    else if (participantR.getMontant - argentDonne < moyenneMontants && !skip && argentDonne != 0)
+                    {
+                        Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} reçoit {participantR.getMontant - moyenneMontants} E de {participantDepot.getByID(participantD.getIDParticipant).getNom}");
+                        argentARecevoir = 0;
+                        Console.WriteLine($"Manque plus que {argentARecevoir} E a {participantDepot.getByID(participantR.getIDParticipant).getNom} pour être totalement remboursé !");
+                        Console.WriteLine();
+                        argentDonne -= participantR.getMontant - moyenneMontants;
+                        break;
+                    }
+                    else if (!skip && argentDonne != 0)
+                    {
+                        Console.WriteLine($"{participantDepot.getByID(participantR.getIDParticipant).getNom} reçoit {argentDonne} E de {participantDepot.getByID(participantD.getIDParticipant).getNom}");
+                        argentARecevoir -= argentDonne;
+                        Console.WriteLine($"Manque plus que {argentARecevoir} E a {participantDepot.getByID(participantR.getIDParticipant).getNom} pour être totalement remboursé !");
+                        Console.WriteLine();
+                        argentDonne = 0;
+                        participantsDejaDonne.Add(participantD);
+                        break;
+                    }
+                    if (argentARecevoir == 0)
+                        break;
+                    i++;
+                }
             }
         }
     }
